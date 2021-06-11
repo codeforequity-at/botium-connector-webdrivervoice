@@ -1,0 +1,53 @@
+{
+  "name": "botium-connector-webdrivervoice",
+  "version": "0.0.1",
+  "description": "Botium Connector for Voice",
+  "main": "dist/botium-connector-webdrivervoice-cjs.js",
+  "module": "dist/botium-connector-webdrivervoice-es.js",
+  "scripts": {
+    "build": "npm run eslint && rollup -c",
+    "eslint": "eslint index.js src/*.js",
+    "eslint-fix": "eslint --fix index.js src/*.js",
+    "update-dependencies": "npm-check-updates -u --timeout 60000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeforequity-at/botium-connector-webdrivervoice.git"
+  },
+  "author": "Botium GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeforequity-at/botium-core/issues"
+  },
+  "homepage": "https://www.botium.ai",
+  "devDependencies": {
+    "@babel/core": "^7.14.2",
+    "@babel/node": "^7.14.2",
+    "@babel/plugin-transform-runtime": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "eslint": "^7.26.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "npm-check-updates": "^11.5.13",
+    "rollup": "^2.48.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.14.0",
+    "axios": "^0.21.1",
+    "botium-connector-webdriverio": "^0.3.10",
+    "debug": "^4.3.1",
+    "form-data": "^4.0.0",
+    "lodash": "^4.17.21",
+    "uuid": "^8.3.2"
+  },
+  "peerDependencies": {
+    "botium-core": "^1.11.5"
+  }
+}
