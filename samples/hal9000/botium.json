@@ -7,17 +7,18 @@
       "WEBDRIVERVOICE_OPTIONS": {
 				"capabilities": {
           "automationName": "Appium",
-          "model": "Galaxy S10",
+          "model": "Pixel 4A \\(5G\\)",
           "securityToken": "..."
         },
         "protocol": "https",
-        "hostname": "partners.perfectomobile.com",
+        "hostname": "demo.perfectomobile.com",
         "port": 443,
         "path": "/nexperience/perfectomobile/wd/hub"
       },
       "WEBDRIVERVOICE_APPPACKAGE": "com.arf.chatbot",
       "WEBDRIVERVOICE_APPNORESET": true,
-      "WEBDRIVERVOICE_INPUT_STARTRECORD": "//*[@resource-id=\"com.arf.chatbot:id/btSpeak\"]"
+      "WEBDRIVERVOICE_INPUT_STARTRECORD": "//*[@resource-id=\"com.arf.chatbot:id/btSpeak\"]",
+      "WEBDRIVERIO_SELENIUM_DEBUG": true
     }
   }
 }

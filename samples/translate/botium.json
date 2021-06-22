@@ -3,21 +3,21 @@
     "Capabilities": {
       "PROJECTNAME": "Webdriver Voice Sample",
       "CONTAINERMODE": "webdrivervoice",
-      "WAITFORBOTTIMEOUT": 30000,
+      "WAITFORBOTTIMEOUT": 60000,
       "WEBDRIVERVOICE_OPTIONS": {
 				"capabilities": {
           "automationName": "Appium",
-          "model": "Galaxy S10",
+          "model": "Pixel 4A \\(5G\\)",
           "securityToken": "..."
         },
         "protocol": "https",
-        "hostname": "partners.perfectomobile.com",
+        "hostname": "demo.perfectomobile.com",
         "port": 443,
         "path": "/nexperience/perfectomobile/wd/hub"
       },
       "WEBDRIVERVOICE_APPPACKAGE": "com.google.android.apps.translate",
       "WEBDRIVERVOICE_APPNORESET": true,
-      "WEBDRIVERIO_INPUT_NAVIGATION_BUTTONS": "//*[@resource-id=\"com.google.android.apps.translate:id/btn_clear_input\"]",
+      "WEBDRIVERVOICE_INPUT_NAVIGATION_BUTTONS": "//*[@resource-id=\"com.google.android.apps.translate:id/btn_clear_input\"]",
       "WEBDRIVERVOICE_INPUT_STARTRECORD": "//*[@resource-id=\"com.google.android.apps.translate:id/btn_dictation_small\"]",
       "WEBDRIVERVOICE_OUTPUT_TRANSCRIBE": true,
       "WEBDRIVERVOICE_OUTPUT_PLAY": "//*[@resource-id=\"com.google.android.apps.translate:id/result_container\"]//*[@resource-id=\"com.google.android.apps.translate:id/img_speaker\"]",

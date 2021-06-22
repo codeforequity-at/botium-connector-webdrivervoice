@@ -29,7 +29,7 @@ const Defaults = {
   [Capabilities.WEBDRIVERVOICE_APPNORESET]: false,
   [Capabilities.WEBDRIVERVOICE_LANGUAGE]: 'us-english',
   [Capabilities.WEBDRIVERVOICE_GENDER]: 'female',
-  [Capabilities.WEBDRIVERVOICE_OUTPUT_TIMEOUT]: 10000,
+  [Capabilities.WEBDRIVERVOICE_OUTPUT_PLAYTIMEOUT]: 10000,
   [Capabilities.WEBDRIVERVOICE_OUTPUT_PROFILE]: 'accuracy',
   [Capabilities.WEBDRIVERVOICE_OUTPUT_TRANSCRIBE]: true
 }
@@ -44,7 +44,11 @@ const clickSeries = async (container, browser, clickSelectors) => {
     try {
       const clickElement = await container.findElement(clickSelector)
       if (container.isAppium()) {
-        await browser.waitUntil(() => clickElement.isDisplayed() && clickElement.isEnabled())
+        await browser.waitUntil(async () => {
+          if (!(await clickElement.isDisplayed())) return false
+          if (!(await clickElement.isEnabled())) return false
+          return true
+        })
       } else {
         await clickElement.waitForClickable()
       }
@@ -75,7 +79,6 @@ const recordAudioOutput = async (container, browser) => {
     const screenshot = await container.delegateContainer._takeScreenshot('onbotsays')
     if (screenshot) {
       botMsg.attachments.push(screenshot)
-      require('fs').writeFileSync('screenshot.png', Buffer.from(screenshot.base64, 'base64'))
     }
   } catch (err) {
     debug(`Failed to take screenshot, skipping: ${err.message}`)
@@ -97,7 +100,6 @@ const recordAudioOutput = async (container, browser) => {
       mediaUri: recordingUrl,
       mimeType: 'audio/wav'
     }]
-    require('fs').writeFileSync('output.wav', buffer)
   } catch (err) {
     debug(`Failed to download audio response from ${recordingUrl}: ${err.message}`)
     return container.queueBotSays(new Error(`Failed to download audio response: ${err.message}`))
@@ -110,6 +112,7 @@ const recordAudioOutput = async (container, browser) => {
         language: container.caps[Capabilities.WEBDRIVERVOICE_OUTPUT_LANGUAGE] || container.caps[Capabilities.WEBDRIVERVOICE_LANGUAGE],
         profile: container.caps[Capabilities.WEBDRIVERVOICE_OUTPUT_PROFILE]
       }])
+      debug(`recordAudioOutput - transcribing recording from ${recordingUrl} ready: ${textResult}`)
       botMsg.messageText = (textResult && textResult.trim()) || ''
     } catch (err) {
       debug(`Failed to transcribe audio response from ${recordingUrl}: ${err.message}`)
@@ -239,10 +242,10 @@ class BotiumConnectorWebdriverVoice {
       throw new Error('No audio and no text input given')
     }
 
-    await clickSeries(this, this.delegateContainer.browser, this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STARTRECORD])
+    await this.delegateContainer._runInQueue(() => clickSeries(this, this.delegateContainer.browser, this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STARTRECORD]))
     debug(`UserSays - Injecting audio artifact ${artifactKey} ...`)
     await this.delegateContainer._runInQueue(() => this.delegateContainer.browser.executeScript('mobile:audio:inject', [{ key: artifactKey, wait: 'wait' }]))
-    await clickSeries(this, this.delegateContainer.browser, this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STOPRECORD])
+    await this.delegateContainer._runInQueue(() => clickSeries(this, this.delegateContainer.browser, this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STOPRECORD]))
 
     try {
       debug(`UserSays - Deleting audio artifact ${artifactKey}`)
