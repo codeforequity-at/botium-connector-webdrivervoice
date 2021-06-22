@@ -136,6 +136,7 @@ class BotiumConnectorWebdriverVoice {
     if (!this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS]) throw new Error('WEBDRIVERVOICE_OPTIONS is required')
     if (_.isString(this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS])) this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS] = JSON.parse(this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS])
     if (!this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS].hostname) throw new Error('WEBDRIVERVOICE_OPTIONS.hostname is required')
+    if (!this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS].hostname.endsWith('.perfectomobile.com')) throw new Error('Only supported for Perfecto cloud')
     if (!this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS].capabilities) throw new Error('WEBDRIVERVOICE_OPTIONS.capabilities is required')
     if (!this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS].capabilities.securityToken) throw new Error('WEBDRIVERVOICE_OPTIONS.capabilities.securityToken is required')
 
