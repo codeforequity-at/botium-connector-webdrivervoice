@@ -17,9 +17,9 @@
       },
       "WEBDRIVERVOICE_APPPACKAGE": "com.google.android.googlequicksearchbox",
       "WEBDRIVERVOICE_APPNORESET": true,
-      "WEBDRIVERVOICE_INPUT_STARTRECORD_": "//*[@resource-id=\"com.google.android.googlequicksearchbox:id/googleapp_mic_icon\"]",
-      "WEBDRIVERVOICE_INPUT_STARTRECORD": "//*[@resource-id=\"com.google.android.googlequicksearchbox:id/clear_or_voice_button\"]",
+      "WEBDRIVERVOICE_INPUT_STARTRECORD": ["//*[@resource-id=\"com.google.android.googlequicksearchbox:id/googleapp_mic_icon\"]","//*[@resource-id=\"com.google.android.googlequicksearchbox:id/clear_or_voice_button\"]"],
       "WEBDRIVERVOICE_OUTPUT_TRANSCRIBE": true,
+      "WEBDRIVERIO_SKIP_WAITFORCLICKABLE": true,
       "WEBDRIVERIO_SELENIUM_DEBUG": false
     }
   }

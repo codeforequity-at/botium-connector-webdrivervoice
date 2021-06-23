@@ -4,7 +4,7 @@ module.exports = {
   PluginVersion: 1,
   PluginClass: BotiumConnectorWebdriverVoice,
   PluginDesc: {
-    name: 'Voice (Selenium or Appium)',
+    name: 'Voice (Website or Smartphone)',
     provider: 'Botium',
     features: {
       audioInput: true,

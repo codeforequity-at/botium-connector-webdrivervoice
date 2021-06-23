@@ -229,19 +229,21 @@ class BotiumConnectorWebdriverVoice {
     await this.delegateContainer._runInQueue(() => this.delegateContainer.browser.executeScript('mobile:audio:inject', [{ key: artifactKey, wait: 'wait' }]))
     if (this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STOPRECORD]) await this.delegateContainer._runInQueue(() => this.clickSeries(this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STOPRECORD]))
 
-    try {
-      debug(`UserSays - Deleting audio artifact ${artifactKey}`)
-      await axios({
-        method: 'DELETE',
-        url: `https://${this.perfectoCloudName}.app.perfectomobile.com/repository/api/v1/artifacts?artifactLocator=${artifactKey}`,
-        headers: {
-          'Perfecto-Authorization': this.perfectoSecurityToken
-        }
-      })
-    } catch (err) {
-      debug(`Failed to delete audio artifact ${artifactKey}: ${err.message}`)
-    }
     setTimeout(() => this.delegateContainer._runInQueue(() => recordAudioOutput(this, this.delegateContainer.browser)), 0)
+    setTimeout(async () => {
+      try {
+        debug(`UserSays - Deleting audio artifact ${artifactKey}`)
+        await axios({
+          method: 'DELETE',
+          url: `https://${this.perfectoCloudName}.app.perfectomobile.com/repository/api/v1/artifacts?artifactLocator=${artifactKey}`,
+          headers: {
+            'Perfecto-Authorization': this.perfectoSecurityToken
+          }
+        })
+      } catch (err) {
+        debug(`Failed to delete audio artifact ${artifactKey}: ${err.message}`)
+      }
+    }, 0)
   }
 
   async Stop () {
