@@ -14,6 +14,7 @@ const Capabilities = {
   WEBDRIVERVOICE_APPNORESET: 'WEBDRIVERVOICE_APPNORESET',
   WEBDRIVERVOICE_LANGUAGE: 'WEBDRIVERVOICE_LANGUAGE',
   WEBDRIVERVOICE_GENDER: 'WEBDRIVERVOICE_GENDER',
+  WEBDRIVERVOICE_SKIP_WAITFORCLICKABLE: 'WEBDRIVERVOICE_SKIP_WAITFORCLICKABLE',
   WEBDRIVERVOICE_INPUT_NAVIGATION_BUTTONS: 'WEBDRIVERVOICE_INPUT_NAVIGATION_BUTTONS',
   WEBDRIVERVOICE_INPUT_STARTRECORD: 'WEBDRIVERVOICE_INPUT_STARTRECORD',
   WEBDRIVERVOICE_INPUT_STOPRECORD: 'WEBDRIVERVOICE_INPUT_STOPRECORD',
@@ -31,7 +32,8 @@ const Defaults = {
   [Capabilities.WEBDRIVERVOICE_GENDER]: 'female',
   [Capabilities.WEBDRIVERVOICE_OUTPUT_PLAYTIMEOUT]: 10000,
   [Capabilities.WEBDRIVERVOICE_OUTPUT_PROFILE]: 'accuracy',
-  [Capabilities.WEBDRIVERVOICE_OUTPUT_TRANSCRIBE]: true
+  [Capabilities.WEBDRIVERVOICE_OUTPUT_TRANSCRIBE]: true,
+  [Capabilities.WEBDRIVERVOICE_SKIP_WAITFORCLICKABLE]: true
 }
 
 const recordAudioOutput = async (container, browser) => {
@@ -127,7 +129,8 @@ class BotiumConnectorWebdriverVoice {
         WEBDRIVERIO_APPPACKAGE: this.caps[Capabilities.WEBDRIVERVOICE_APPPACKAGE],
         WEBDRIVERIO_APPACTIVITY: this.caps[Capabilities.WEBDRIVERVOICE_APPACTIVITY],
         WEBDRIVERIO_APPNORESET: this.caps[Capabilities.WEBDRIVERVOICE_APPNORESET],
-        WEBDRIVERIO_INPUT_NAVIGATION_BUTTONS: this.caps[Capabilities.WEBDRIVERVOICE_INPUT_NAVIGATION_BUTTONS]
+        WEBDRIVERIO_INPUT_NAVIGATION_BUTTONS: this.caps[Capabilities.WEBDRIVERVOICE_INPUT_NAVIGATION_BUTTONS],
+        WEBDRIVERIO_SKIP_WAITFORCLICKABLE: this.caps[Capabilities.WEBDRIVERVOICE_SKIP_WAITFORCLICKABLE]
       }
       this.perfectoCloudName = this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS].hostname.split('.')[0]
       this.perfectoSecurityToken = this.caps[Capabilities.WEBDRIVERVOICE_OPTIONS].capabilities.securityToken
@@ -142,7 +145,6 @@ class BotiumConnectorWebdriverVoice {
     await this.delegateContainer.Build()
 
     this.isAppium = (...args) => this.delegateContainer.isAppium(...args)
-    this.waitForClickElement = (...args) => this.delegateContainer.waitForClickElement(...args)
     this.clickSeries = (...args) => this.delegateContainer.clickSeries(...args)
     this.findElement = (...args) => this.delegateContainer.findElement(...args)
     this.findElements = (...args) => this.delegateContainer.findElements(...args)

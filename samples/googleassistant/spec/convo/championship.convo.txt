@@ -1,0 +1,13 @@
+championship
+
+#me
+who won the european championship in 2016
+
+#bot
+portugal
+
+#me
+and who won the world championship in 2018
+
+#bot
+france

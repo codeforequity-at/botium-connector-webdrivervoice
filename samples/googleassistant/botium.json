@@ -15,9 +15,10 @@
         "port": 443,
         "path": "/nexperience/perfectomobile/wd/hub"
       },
-      "WEBDRIVERVOICE_APPPACKAGE": "com.google.android.googlequicksearchbox",
+      "WEBDRIVERVOICE_APPPACKAGE": "com.google.android.apps.googleassistant",
       "WEBDRIVERVOICE_APPNORESET": true,
-      "WEBDRIVERVOICE_INPUT_STARTRECORD": ["//*[@resource-id=\"com.google.android.googlequicksearchbox:id/googleapp_mic_icon\"]","//*[@resource-id=\"com.google.android.googlequicksearchbox:id/clear_or_voice_button\"]"],
+      "WEBDRIVERVOICE_INPUT_STARTRECORD_": ["//*[@resource-id=\"com.google.android.googlequicksearchbox:id/googleapp_mic_icon\"]","//*[@resource-id=\"com.google.android.googlequicksearchbox:id/clear_or_voice_button\"]"],
+      "WEBDRIVERVOICE_INPUT_STARTRECORD": ["//*[@resource-id=\"com.google.android.googlequicksearchbox:id/opa_drl_mic_btn\"]"],
       "WEBDRIVERVOICE_OUTPUT_TRANSCRIBE": true,
       "WEBDRIVERIO_SKIP_WAITFORCLICKABLE": true,
       "WEBDRIVERIO_SELENIUM_DEBUG": false
