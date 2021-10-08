@@ -31,7 +31,7 @@ const Defaults = {
   [Capabilities.WEBDRIVERVOICE_LANGUAGE]: 'us-english',
   [Capabilities.WEBDRIVERVOICE_GENDER]: 'female',
   [Capabilities.WEBDRIVERVOICE_OUTPUT_PLAYTIMEOUT]: 10000,
-  [Capabilities.WEBDRIVERVOICE_OUTPUT_PROFILE]: 'accuracy',
+  [Capabilities.WEBDRIVERVOICE_OUTPUT_PROFILE]: 'performance',
   [Capabilities.WEBDRIVERVOICE_OUTPUT_TRANSCRIBE]: true,
   [Capabilities.WEBDRIVERVOICE_SKIP_WAITFORCLICKABLE]: true
 }
@@ -80,6 +80,7 @@ const recordAudioOutput = async (container, browser) => {
     debug(`Failed to download audio response from ${recordingUrl}: ${err.message}`)
     return container.queueBotSays(new Error(`Failed to download audio response: ${err.message}`))
   }
+
   if (container.caps[Capabilities.WEBDRIVERVOICE_OUTPUT_TRANSCRIBE]) {
     try {
       debug(`recordAudioOutput - transcribing recording from ${recordingUrl}`)
@@ -227,25 +228,25 @@ class BotiumConnectorWebdriverVoice {
     }
 
     if (this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STARTRECORD]) await this.delegateContainer._runInQueue(() => this.clickSeries(this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STARTRECORD]))
-    debug(`UserSays - Injecting audio artifact ${artifactKey} ...`)
-    await this.delegateContainer._runInQueue(() => this.delegateContainer.browser.executeScript('mobile:audio:inject', [{ key: artifactKey, wait: 'wait' }]))
+    await this.delegateContainer._runInQueue(() => {
+      debug(`UserSays - Injecting audio artifact ${artifactKey} ...`)
+      return this.delegateContainer.browser.executeScript('mobile:audio:inject', [{ key: artifactKey, wait: 'wait' }])
+    })
     if (this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STOPRECORD]) await this.delegateContainer._runInQueue(() => this.clickSeries(this.caps[Capabilities.WEBDRIVERVOICE_INPUT_STOPRECORD]))
 
-    setTimeout(() => this.delegateContainer._runInQueue(() => recordAudioOutput(this, this.delegateContainer.browser)), 0)
-    setTimeout(async () => {
-      try {
-        debug(`UserSays - Deleting audio artifact ${artifactKey}`)
-        await axios({
-          method: 'DELETE',
-          url: `https://${this.perfectoCloudName}.app.perfectomobile.com/repository/api/v1/artifacts?artifactLocator=${artifactKey}`,
-          headers: {
-            'Perfecto-Authorization': this.perfectoSecurityToken
-          }
-        })
-      } catch (err) {
-        debug(`Failed to delete audio artifact ${artifactKey}: ${err.message}`)
+    this.delegateContainer._runInQueue(() => recordAudioOutput(this, this.delegateContainer.browser))
+      .catch(err => debug(`recordAudioOutput failed: ${err.message}`))
+
+    debug(`UserSays - Deleting audio artifact ${artifactKey}`)
+    axios({
+      method: 'DELETE',
+      url: `https://${this.perfectoCloudName}.app.perfectomobile.com/repository/api/v1/artifacts?artifactLocator=${artifactKey}`,
+      headers: {
+        'Perfecto-Authorization': this.perfectoSecurityToken
       }
-    }, 0)
+    })
+      .then(() => debug(`UserSays - Deleted audio artifact ${artifactKey}`))
+      .catch(err => debug(`Failed to delete audio artifact ${artifactKey}: ${err.message}`))
   }
 
   async Stop () {

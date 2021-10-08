@@ -16,6 +16,7 @@
         "path": "/nexperience/perfectomobile/wd/hub"
       },
       "WEBDRIVERVOICE_APPPACKAGE": "com.google.android.apps.translate",
+      "WEBDRIVERVOICE_APPACTIVITY": "com.google.android.apps.translate.TranslateActivity",
       "WEBDRIVERVOICE_APPNORESET": true,
       "WEBDRIVERVOICE_INPUT_STARTRECORD": ["//*[@resource-id=\"com.google.android.apps.translate:id/btn_clear_input\"]","//*[@resource-id=\"com.google.android.apps.translate:id/btn_dictation_small\"]"],
       "WEBDRIVERVOICE_OUTPUT_TRANSCRIBE": true,
