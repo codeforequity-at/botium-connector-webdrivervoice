@@ -149,10 +149,12 @@ class BotiumConnectorWebdriverVoice {
     this.clickSeries = (...args) => this.delegateContainer.clickSeries(...args)
     this.findElement = (...args) => this.delegateContainer.findElement(...args)
     this.findElements = (...args) => this.delegateContainer.findElements(...args)
+    this._runInQueue = (...args) => this.delegateContainer._runInQueue(...args)
   }
 
   async Start () {
     await this.delegateContainer.Start()
+    this.browser = this.delegateContainer.browser
     if (this.caps[Capabilities.WEBDRIVERVOICE_HAS_WELCOME]) {
       await this.delegateContainer._runInQueue(() => recordAudioOutput(this, this.delegateContainer.browser))
     }
@@ -251,6 +253,7 @@ class BotiumConnectorWebdriverVoice {
 
   async Stop () {
     await this.delegateContainer.Stop()
+    this.browser = null
   }
 
   async Clean () {
